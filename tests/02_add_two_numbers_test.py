@@ -25,12 +25,19 @@ def buildNodes(digits):
     return firstNode
 
 def assertNodes(result, expected):
-    n1 = result
-    n2 = expected
-    while n2.next:
-        assert n1.val == n2.val
-        n1 = n1.next
-        n2 = n2.next
+    result_array = to_array(result)
+    expected_array = to_array(expected)
+
+    assert result_array == expected_array
+
+def to_array(nodes):
+    ret = []
+    node = nodes
+    while node:
+        ret.append(node.val)
+        node = node.next
+    
+    return ret
 
 '''
 Input: (1 -> 2) + (3 -> 5 -> 7)
@@ -53,6 +60,20 @@ def test_3():
     l1 = buildNodes([9, 2, 3])
     l2 = buildNodes([2, 8])
     expectation = buildNodes([1, 1, 4])
+
+    solution = Solution()
+    result = solution.addTwoNumbers(l1, l2)
+    assertNodes(result, expectation)
+
+
+'''
+Input: [2,4,3] + [5,6,4]
+output: [7,0,8]
+'''
+def test_4():
+    l1 = buildNodes([2, 4, 3])
+    l2 = buildNodes([5, 6, 4])
+    expectation = buildNodes([7, 0, 8])
 
     solution = Solution()
     result = solution.addTwoNumbers(l1, l2)

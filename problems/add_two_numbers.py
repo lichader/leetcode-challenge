@@ -17,7 +17,7 @@ class Solution:
         copy_l2 = l2
         ret = ListNode(0)
         tmp = ret
-        while (copy_l1 and copy_l1.next) or (copy_l2 and copy_l2.next):
+        while copy_l1 or copy_l2:
             val_l1 = copy_l1.val if copy_l1 else 0
             val_l2 = copy_l2.val if copy_l2 else 0
 
@@ -30,10 +30,13 @@ class Solution:
                 add_one = False
 
             tmp.val = val
-            tmp.next = ListNode(0)
-            tmp = tmp.next
-
-            copy_l1 = copy_l1.next
-            copy_l2 = copy_l2.next
+            
+            if (copy_l1 and copy_l1.next) or (copy_l2 and copy_l2.next):
+                tmp.next = ListNode(0)
+                tmp = tmp.next
+                copy_l1 = copy_l1.next
+                copy_l2 = copy_l2.next
+            else:
+                break
 
         return ret
