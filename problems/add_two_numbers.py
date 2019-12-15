@@ -12,7 +12,6 @@ from .list_node import ListNode
 
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        add_one = False
         copy_l1 = l1
         copy_l2 = l2
         ret = ListNode(0)
@@ -21,22 +20,22 @@ class Solution:
             val_l1 = copy_l1.val if copy_l1 else 0
             val_l2 = copy_l2.val if copy_l2 else 0
 
-            val = val_l1 + val_l2 + (1 if add_one else 0)
+            tmp.val = val_l1 + val_l2 + tmp.val
 
-            if val >= 10:
-                add_one = True
-                val = val - 10
-            else:
-                add_one = False
+            next_node_init_value = 0
+            if tmp.val >= 10:
+                tmp.val = tmp.val - 10
+                next_node_init_value = 1
 
-            tmp.val = val
-            
-            if (copy_l1 and copy_l1.next) or (copy_l2 and copy_l2.next):
-                tmp.next = ListNode(0)
-                tmp = tmp.next
+            if copy_l1:
                 copy_l1 = copy_l1.next
+
+            if copy_l2:
                 copy_l2 = copy_l2.next
-            else:
-                break
+
+            if copy_l1 or copy_l2 or next_node_init_value > 0:
+                tmp.next = ListNode(next_node_init_value)
+
+            tmp = tmp.next
 
         return ret

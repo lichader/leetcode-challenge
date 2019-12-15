@@ -78,3 +78,30 @@ def test_4():
     solution = Solution()
     result = solution.addTwoNumbers(l1, l2)
     assertNodes(result, expectation)
+
+
+'''
+Input: [5] + [5]
+output: [0,1]
+'''
+def test_5():
+    l1 = buildNodes([5])
+    l2 = buildNodes([5])
+    expectation = buildNodes([0, 1])
+
+    solution = Solution()
+    result = solution.addTwoNumbers(l1, l2)
+    assertNodes(result, expectation)
+
+'''
+Input: [9,1,6] + [0]
+Output: [9, 1, 6]
+'''
+def test_6():
+    l1 = buildNodes([9, 1, 6])
+    l2 = buildNodes([0])
+    expectation = buildNodes([9, 1, 6])
+
+    solution = Solution()
+    result = solution.addTwoNumbers(l1, l2)
+    assertNodes(result, expectation)
