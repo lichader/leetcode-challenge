@@ -24,18 +24,28 @@ Note that the answer must be a substring, "pwke" is a subsequence and not a subs
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        string_length = len(s)
+        length = len(s)
 
-        if string_length == 0:
-            return 0
+        max_length_so_far = start = end = 0
 
-        for length in reversed(range(2, string_length+1)):
-            for start in range(string_length - length + 1):
-                end = start + length
-                sub_string = s[start:end]
+        while (start < length and end < length):
+            sub_string = s[start:end]
+            next_char = s[end]
+            end += 1
 
-                unique_chars = set(list(sub_string))
-                if len(unique_chars) == length:
-                    return length
+            pos = sub_string.find(next_char)
+            if pos != -1:
+                start = start + pos + 1
+            else:
+                max_length_so_far = max(max_length_so_far, len(sub_string)+1)
+                
+            
+        return max_length_so_far
 
-        return 1
+"""
+Start from index 0, 1 
+Search next char: 2 
+If next char is in current sub string, take a note of current max and slide to that character
+update index: start to the pos + 1 of that character 
+and increase j
+"""

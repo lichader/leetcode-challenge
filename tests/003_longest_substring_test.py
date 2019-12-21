@@ -22,3 +22,9 @@ def test_scenario_4():
     string1 = "wke"
     result = subject.lengthOfLongestSubstring(string1)
     assert result == 3
+
+
+def test_scenario_5():
+    string1 = "dvdf"
+    result = subject.lengthOfLongestSubstring(string1)
+    assert result == 3
