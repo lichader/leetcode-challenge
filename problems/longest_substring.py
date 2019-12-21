@@ -24,28 +24,33 @@ Note that the answer must be a substring, "pwke" is a subsequence and not a subs
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        length = len(s)
+        max_length_so_far = start = 0
 
-        max_length_so_far = start = end = 0
+        dict = {}
 
-        while (start < length and end < length):
-            sub_string = s[start:end]
-            next_char = s[end]
-            end += 1
+        for index,value in enumerate(s):
+            if value in dict:
+                temp_start = dict[value] + 1
 
-            pos = sub_string.find(next_char)
-            if pos != -1:
-                start = start + pos + 1
-            else:
-                max_length_so_far = max(max_length_so_far, len(sub_string)+1)
-                
-            
+                # only move pointer right
+                if temp_start > start:
+                    start = temp_start
+
+            max_length_so_far = max(max_length_so_far, index + 1 - start)
+            dict[value] = index
+    
         return max_length_so_far
 
 """
-Start from index 0, 1 
-Search next char: 2 
-If next char is in current sub string, take a note of current max and slide to that character
-update index: start to the pos + 1 of that character 
-and increase j
+Version 2:
+Only need to loop the entire array once and use less variables to track
+Tricky part is the start pointer should always move right
+
+each time in the loop,
+* we compare if current value is duplicate or not. 
+*   if so:
+      we get the position of its next char. If it is smaller than our current start value, we skip it as we know there is duplicate already before the current start
+    otherwise:
+      update start
+
 """
