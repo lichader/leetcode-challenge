@@ -22,6 +22,12 @@ The median is (2 + 3)/2 = 2.5
 
 from typing import List
 
+
+"""
+We actually only need to iterate half elements of m+n
+because we only need to know the value of elements in the middle
+
+"""
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
         merged = []
@@ -29,40 +35,50 @@ class Solution:
         len1 = len(nums1)
         len2 = len(nums2)
 
+        total_size = len1 + len2
+
+        left = 0
+        right = 0
+
+        import math
+        if total_size % 2 == 0:
+            right = int(total_size / 2)
+            left = right - 1
+        else:
+            right = math.floor(total_size / 2)
+            left = right
+
         p1 = 0
         p2 = 0
 
-        while p1 != len1 and p2 != len2 :
-            i1 = nums1[p1]
-            i2 = nums2[p2]
+        while len(merged) < (right + 1) :
+            i1 = None
+            i2 = None
 
-            if i1 < i2:
+            if p1 < len1:
+                i1 = nums1[p1]
+
+            if p2 < len2:
+                i2 = nums2[p2]
+
+            if i1 != None and i2 != None:
+                if i1 < i2:
+                    merged.append(i1)
+                    p1 += 1
+                elif i1 > i2:
+                    merged.append(i2)
+                    p2 += 1
+                else:
+                    merged.append(i1)
+                    merged.append(i1)
+                    p1 += 1
+                    p2 += 1
+            elif i1 != None:
                 merged.append(i1)
                 p1 += 1
-            elif i1 > i2:
+            elif i2 != None:
                 merged.append(i2)
                 p2 += 1
-            else:
-                merged.append(i1)
-                merged.append(i1)
-                p1 += 1
-                p2 += 1
 
+        return (merged[left] + merged[right]) / 2
             
-        
-        if p1 != len1:
-            merged.extend(nums1[p1:])
-
-        if p2 != len2:
-            merged.extend(nums2[p2:])
-
-        merged_len = len(merged)
-
-        import math
-        if merged_len % 2 != 0:
-            floor = math.floor(merged_len / 2)
-            return merged[floor]
-        else:
-            ceil = int(merged_len / 2)
-            floor = ceil - 1
-            return (merged[floor] + merged[ceil]) / 2
